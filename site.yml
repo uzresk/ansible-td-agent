@@ -1,0 +1,7 @@
+---
+- hosts: server
+  become: yes 
+  roles:
+    - td-agent
+    - limits
+    - kernel

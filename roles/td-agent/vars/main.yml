@@ -1,0 +1,6 @@
+---
+td_agent:
+  plugins:
+    - { name: 'fluent-plugin-elasticsearch' }
+    - { name: 'fluent-plugin-s3' }
+

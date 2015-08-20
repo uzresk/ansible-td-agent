@@ -1,0 +1,24 @@
+---
+- name: Install libselinux-python
+  yum: name=libselinux-python
+
+- name: rpm repo
+  copy: src=repo dest=/etc/yum.repos.d/td.repo
+
+- name: install td-agent
+  yum: name=td-agent state=latest
+
+- name: service td-agent
+  service: name=td-agent state=started enabled=yes
+
+- name: Check plugins
+  command: "td-agent-gem list --local {{ item.name }}"
+  with_items: "{{ td_agent.plugins }}"
+  changed_when: False
+  failed_when: False
+  register: plugin_status
+
+- name: Install plugins
+  command: "td-agent-gem install {{ item.item.name }}"
+  with_items: plugin_status.results
+  when: plugin_status.results is defined and item.stdout[0] is undefined
