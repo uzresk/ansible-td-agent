@@ -19,3 +19,18 @@
   command: "td-agent-gem install {{ item.item.name }}"
   with_items: plugin_status.results
   when: plugin_status.results is defined and item.stdout[0] is undefined
+
+- name: td-agent template copy
+  template: >
+    src=td-agent.conf
+    dest=/etc/td-agent/td-agent.conf
+    backup=yes
+  notify: restart td-agent
+
+- name: create temp directory use posision
+  file: >
+    path={{ td_agent.position_path }}
+    state=directory
+    owner=td-agent
+    group=td-agent
+    mode=755
