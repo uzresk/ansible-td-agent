@@ -1,2 +1,5 @@
 ---
+- name: Install libselinux-python
+  yum: name=libselinux-python
+
 - include: td-agent.yml tags=td-agent

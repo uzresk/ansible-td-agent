@@ -1,7 +1,4 @@
 ---
-- name: Install libselinux-python
-  yum: name=libselinux-python
-
 - name: rpm repo
   copy: src=repo dest=/etc/yum.repos.d/td.repo
 
